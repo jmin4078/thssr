@@ -14,6 +14,18 @@
 <section>
     <a th:href="@{/books/new}">등록</a>
 </section>
-
+<section style="display: flex; flex-direction: column; gap: 8px; align-items: start;">
+    <div th:each="book : ${books}">
+        <p th:text="${book.id}"></p>
+        <p th:text="${book.title}"></p>
+        <p th:text="${book.author}"></p>
+        <p th:text="${book.price}"></p>
+        <p th:text="${book.discountPrice}"></p>
+        <p th:text="${book.isAvailable}"></p>
+        <p th:text="${book.category}"></p>
+        <p th:text="${book.createdAt}"></p>
+        <p th:text="${book.updatedAt}"></p>
+    </div>
+</section>
 </body>
 </html>
