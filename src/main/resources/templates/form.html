@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>나만의 서점</title>
+</head>
+<body>
+<h1>나만의 서점</h1>
+<section>
+    <a th:href="@{/books}">목록으로</a>
+</section>
+<section>
+    <form th:method="post"
+          th:action="@{/books}"
+          th:object="${bookForm}">
+        <label>
+            제목 : <input th:field="*{title}">
+        </label>
+        <label>
+            저자 : <input th:field="*{author}">
+        </label>
+        <label>
+            가격 : <input th:field="*{price}">
+        </label>
+        <label>
+            할인가 : <input th:field="*{discountPrice}">
+        </label>
+        <label>
+            판매여부 : <input type="checkbox" th:field="*{isAvailable}">
+        </label>
+        <label>
+            카테고리 : <select th:field="*{category}">
+            <option th:each="cat : ${categories}"
+                    th:value="${cat}"
+                    th:text="${cat}"></option>
+        </select>
+        </label>
+        <button>등록</button>
+    </form>
+</section>
+</body>
+</html>
