@@ -34,4 +34,8 @@ public class BookRepositoryImpl extends BookRepository {
     public void deleteById(long id) {
         bookJpaRepository.deleteById(id);
     }
+    @Override
+    public List<BookEntity> search(String keyword) {
+        return bookJpaRepository.findAllByTitleContaining(keyword);
+    }
 }

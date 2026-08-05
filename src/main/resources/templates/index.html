@@ -11,6 +11,12 @@
     <header class="topbar">
         <a class="brand" th:href="@{/books}" aria-label="나만의 책장 홈"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 5.5c3.2-.8 6.1-.2 8.5 1.8v12c-2.4-2-5.3-2.6-8.5-1.8v-12Z"/><path d="M20.5 5.5c-3.2-.8-6.1-.2-8.5 1.8v12c2.4-2 5.3-2.6 8.5-1.8v-12Z"/></svg></span><span>나만의 책장</span></a>
         <a class="button button-primary" th:href="@{/books/new}"><span aria-hidden="true">＋</span> 도서 등록</a>
+        <section>
+            <form>
+                <label>키워드 : <input name="keyword"></label>
+                <button>검색</button>
+            </form>
+        </section>
     </header>
     <section class="hero">
         <div><p class="eyebrow">MY LIBRARY</p><h1>나만의 책장을<br><em>한눈에 관리하세요.</em></h1><p class="hero-copy">읽고 싶은 책과 이미 만난 책을 한곳에 모아보세요.</p></div>
@@ -25,6 +31,7 @@
         </article>
     </section>
     <section class="empty-state" th:if="${books == null or #lists.isEmpty(books)}"><div class="empty-icon">♡</div><h2>아직 등록된 도서가 없어요</h2><p>첫 번째 책을 등록하고 나만의 책장을 시작해보세요.</p><a class="button button-primary" th:href="@{/books/new}">첫 도서 등록하기</a></section>
+
 </main>
 </body>
 </html>
