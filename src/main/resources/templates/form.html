@@ -1,46 +1,21 @@
 <!doctype html>
-<html lang="ko">
-<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>나만의 서점</title>
-</head>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title th:text="${editMode} ? '도서 수정 | 나만의 책장' : '새 도서 등록 | 나만의 책장'">도서 등록 | 나만의 책장</title><link rel="stylesheet" th:href="@{/css/style.css}"><style>.switch-row{cursor:pointer}.switch-row input[type="checkbox"]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:2}.switch-row .switch{pointer-events:none}.switch-row input[type="hidden"]{display:none}.switch-row input[type="checkbox"]:checked ~ .switch{background:var(--accent)}.switch-row input[type="checkbox"]:checked ~ .switch:after{transform:translateX(18px)}</style></head>
 <body>
-<h1>나만의 서점</h1>
-<section>
-    <a th:href="@{/books}">목록으로</a>
-</section>
-<section>
-    <form th:method="post"
-          th:action="@{/books}"
-          th:object="${bookForm}">
-        <label>
-            제목 : <input th:field="*{title}">
-        </label>
-        <label>
-            저자 : <input th:field="*{author}">
-        </label>
-        <label>
-            가격 : <input type="number" th:field="*{price}">
-        </label>
-        <label>
-            할인가 : <input type="number" th:field="*{discountPrice}">
-        </label>
-        <label>
-            판매여부 : <input type="checkbox" th:field="*{isAvailable}">
-        </label>
-        <label>
-            카테고리 : <select th:field="*{category}">
-            <option th:each="cat : ${categories}"
-                    th:value="${cat}"
-                    th:text="${cat}"></option>
-        </select>
-        </label>
-        <button>등록</button>
-    </form>
-</section>
+<main class="shell form-shell">
+    <header class="topbar"><a class="brand" th:href="@{/books}" aria-label="나만의 책장 홈"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 5.5c3.2-.8 6.1-.2 8.5 1.8v12c-2.4-2-5.3-2.6-8.5-1.8v-12Z"/><path d="M20.5 5.5c-3.2-.8-6.1-.2-8.5 1.8v12c-2.4-2-5.3-2.6-8.5-1.8v-12Z"/></svg></span><span>나만의 책장</span></a><a class="back-link" th:href="@{/books}">← 목록으로</a></header>
+    <section class="form-heading"><p class="eyebrow" th:text="${editMode} ? 'EDIT BOOK' : 'NEW BOOK'">NEW BOOK</p><h1 th:if="${!editMode}">새로운 책을<br><em>책장에 추가하세요.</em></h1><h1 th:if="${editMode}">도서 정보를<br><em>수정하세요.</em></h1><p class="hero-copy">도서 정보를 입력하면 나의 컬렉션에 바로 저장됩니다.</p></section>
+    <section class="form-card"><form method="post" th:action="${formAction}" th:object="${bookForm}">
+        <div class="form-grid">
+            <label class="field field-wide"><span>도서 제목</span><input th:field="*{title}" placeholder="예: 데미안" required></label>
+            <label class="field"><span>저자</span><input th:field="*{author}" placeholder="예: 헤르만 헤세" required></label>
+            <label class="field"><span>카테고리</span><select th:field="*{category}" required><option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option></select></label>
+            <label class="field"><span>정가 <small>원</small></span><input type="number" min="0" th:field="*{price}" placeholder="0" required></label>
+            <label class="field"><span>판매가 <small>원</small></span><input type="number" min="0" th:field="*{discountPrice}" placeholder="0" required></label>
+        </div>
+        <label class="switch-row"><span><strong>판매 중인 도서</strong><small>현재 구매 가능한 도서로 표시합니다.</small></span><input type="checkbox" th:field="*{isAvailable}"><span class="switch" aria-hidden="true"></span></label>
+        <button class="button button-primary submit-button" type="submit" th:text="${editMode} ? '변경사항 저장하기 →' : '도서 등록하기 →'">도서 등록하기 →</button>
+    </form></section>
+</main>
 </body>
 </html>

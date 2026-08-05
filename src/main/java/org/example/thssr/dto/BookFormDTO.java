@@ -22,8 +22,18 @@ public class BookFormDTO {
                 .author(author)
                 .price(price)
                 .discountPrice(discountPrice)
-                .isAvailable(isAvailable)
+                .isAvailable(Boolean.TRUE.equals(isAvailable))
                 .category(category)
+                .build();
+    }
+    public static BookFormDTO fromEntity(BookEntity entity) {
+        return BookFormDTO.builder()
+                .title(entity.getTitle())
+                .author(entity.getAuthor())
+                .price(entity.getPrice())
+                .discountPrice(entity.getDiscountPrice())
+                .isAvailable(entity.isAvailable())
+                .category(entity.getCategory())
                 .build();
     }
 }

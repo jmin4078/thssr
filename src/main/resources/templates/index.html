@@ -1,31 +1,30 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>서점</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책장 | 도서 관리</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>
-    나만의 서점
-</h1>
-<section>
-    <a th:href="@{/books/new}">등록</a>
-</section>
-<section style="display: flex; flex-direction: column; gap: 8px; align-items: start;">
-    <div th:each="book : ${books}">
-        <p th:text="${book.id}"></p>
-        <p th:text="${book.title}"></p>
-        <p th:text="${book.author}"></p>
-        <p th:text="${book.price}"></p>
-        <p th:text="${book.discountPrice}"></p>
-        <p th:text="${book.isAvailable}"></p>
-        <p th:text="${book.category}"></p>
-        <p th:text="${book.createdAt}"></p>
-        <p th:text="${book.updatedAt}"></p>
-    </div>
-</section>
+<main class="shell">
+    <header class="topbar">
+        <a class="brand" th:href="@{/books}" aria-label="나만의 책장 홈"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 5.5c3.2-.8 6.1-.2 8.5 1.8v12c-2.4-2-5.3-2.6-8.5-1.8v-12Z"/><path d="M20.5 5.5c-3.2-.8-6.1-.2-8.5 1.8v12c2.4-2 5.3-2.6 8.5-1.8v-12Z"/></svg></span><span>나만의 책장</span></a>
+        <a class="button button-primary" th:href="@{/books/new}"><span aria-hidden="true">＋</span> 도서 등록</a>
+    </header>
+    <section class="hero">
+        <div><p class="eyebrow">MY LIBRARY</p><h1>나만의 책장을<br><em>한눈에 관리하세요.</em></h1><p class="hero-copy">읽고 싶은 책과 이미 만난 책을 한곳에 모아보세요.</p></div>
+        <div class="hero-art" aria-hidden="true"><span>✦</span><span>BOOKS</span></div>
+    </section>
+    <section class="section-heading"><div><p class="eyebrow">COLLECTION</p><h2>등록된 도서 <span th:text="${books == null ? 0 : #lists.size(books)}">0</span></h2></div><span class="muted">총 도서를 최신 등록순으로 보여드려요.</span></section>
+    <section class="book-grid" th:if="${books != null and !#lists.isEmpty(books)}">
+        <article class="book-card" th:each="book : ${books}">
+            <div class="book-cover"><span th:text="${book.category ?: 'BOOK'}">BOOK</span><strong th:text="${book.title != null and !book.title.isEmpty() ? book.title.substring(0, 1) : 'B'}">B</strong></div>
+            <div class="book-info"><div class="book-meta"><span class="tag" th:text="${book.category}">소설</span><span class="availability" th:classappend="${book.isAvailable ? ' is-available' : ''}" th:text="${book.isAvailable ? '판매 중' : '품절'}">판매 중</span></div><h3 th:text="${book.title}">도서 제목</h3><p class="author" th:text="${book.author}">저자</p><div class="price-row"><span class="price" th:text="${#numbers.formatInteger(book.discountPrice, 0, 'COMMA')} + '원'">12,000원</span><del th:if="${book.price != book.discountPrice}" th:text="${#numbers.formatInteger(book.price, 0, 'COMMA')} + '원'">15,000원</del></div></div>
+            <a class="card-link" th:href="@{/books/{id}(id=${book.id})}">상세 보기 <span aria-hidden="true">→</span></a>
+        </article>
+    </section>
+    <section class="empty-state" th:if="${books == null or #lists.isEmpty(books)}"><div class="empty-icon">♡</div><h2>아직 등록된 도서가 없어요</h2><p>첫 번째 책을 등록하고 나만의 책장을 시작해보세요.</p><a class="button button-primary" th:href="@{/books/new}">첫 도서 등록하기</a></section>
+</main>
 </body>
 </html>

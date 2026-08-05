@@ -1,16 +1,12 @@
 package org.example.thssr.controller;
 
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.example.thssr.dto.BookFormDTO;
 import org.example.thssr.model.entity.BookEntity;
 import org.example.thssr.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +31,8 @@ public class BookController {
     // import org.springframework.ui.Model;
     public String newBook(Model model) {
         model.addAttribute("bookForm", BookFormDTO.builder().build());
+        model.addAttribute("editMode", false);
+        model.addAttribute("formAction", "/books");
         return "form";
     }
     @PostMapping
@@ -44,4 +42,28 @@ public class BookController {
         return "redirect:/books";
     }
 
+    @GetMapping("/{id}/edit")
+    public String editBook(@PathVariable long id, Model model) {
+        model.addAttribute("bookForm", BookFormDTO.fromEntity(bookService.findById(id)));
+        model.addAttribute("editMode", true);
+        model.addAttribute("formAction", "/books/" + id);
+        return "form";
+    }
+
+    @PostMapping("/{id}")
+    public String updateBook(@PathVariable long id, @ModelAttribute("bookForm") BookFormDTO bookFormDTO) {
+        bookService.updateBook(id, bookFormDTO);
+        return "redirect:/books/{id}";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String deleteBook(@PathVariable long id) {
+        bookService.deleteBook(id);
+        return "redirect:/books";
+    }
+    @GetMapping("/{id}")
+    public String detail(@PathVariable long id, Model model) {
+        model.addAttribute("bookData", bookService.findById(id));
+        return "detail";
+    }
 }

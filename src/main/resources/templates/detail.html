@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서 상세 | 책장</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .detail-shell{max-width:900px}.detail-card{display:grid;grid-template-columns:220px 1fr;gap:42px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px;margin:34px 0 70px}.detail-cover{min-height:300px;border-radius:14px;background:linear-gradient(145deg,var(--navy),#51647d);color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:space-between}.detail-cover span{font-size:11px;letter-spacing:.16em;color:#c8d1df}.detail-cover strong{font:90px Georgia,serif;color:#ffb198}.detail-content{padding:8px 0}.detail-content h1{font-size:38px;letter-spacing:-.07em;margin:10px 0 8px}.detail-author{color:var(--muted);margin:0 0 30px}.detail-badges{display:flex;gap:8px;align-items:center}.detail-price{display:flex;align-items:baseline;gap:9px;border-top:1px solid var(--line);padding-top:24px;margin-top:24px}.detail-price strong{font-size:28px}.detail-price del{font-size:13px;color:var(--muted)}.detail-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}.info-item{padding:14px 0;border-top:1px solid var(--line)}.info-item span{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.info-item strong{font-size:14px}.status-available{color:#45a476}.detail-actions{display:flex;align-items:center;gap:10px;margin:28px 0 12px}.detail-actions form{margin:0}.button-danger{background:#fff0ed;color:#d85c3d;box-shadow:none}.button-danger:hover{background:#ffe2db}.card-link{display:inline-flex;align-items:center;gap:5px;color:var(--accent);font-size:12px;font-weight:800;text-decoration:none;margin-top:auto;white-space:nowrap}.card-link:hover{color:var(--accent-dark)}.button-quiet{color:var(--muted);background:#f1f2f4;box-shadow:none}.button-quiet:hover{background:#e5e7eb}@media(max-width:760px){.detail-card{grid-template-columns:1fr;gap:26px;padding:22px}.detail-cover{min-height:220px}.detail-cover strong{font-size:70px}.detail-content h1{font-size:30px}.detail-info{grid-template-columns:1fr}.topbar{height:74px}.detail-actions .button{padding-inline:13px}}
+    </style>
+</head>
+<body>
+<main class="shell detail-shell" th:object="${bookData}">
+    <header class="topbar">
+        <a class="brand" th:href="@{/books}" aria-label="나만의 책장 홈"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 5.5c3.2-.8 6.1-.2 8.5 1.8v12c-2.4-2-5.3-2.6-8.5-1.8v-12Z"/><path d="M20.5 5.5c-3.2-.8-6.1-.2-8.5 1.8v12c2.4-2 5.3-2.6 8.5-1.8v-12Z"/></svg></span><span>나만의 책장</span></a>
+        <a class="back-link" th:href="@{/books}">← 목록으로</a>
+    </header>
+    <section class="detail-card">
+        <div class="detail-cover"><span th:text="*{category ?: 'BOOK'}">BOOK</span><strong th:text="*{title != null and !title.isEmpty() ? title.substring(0, 1) : 'B'}">B</strong></div>
+        <div class="detail-content">
+            <div class="detail-badges"><span class="tag" th:text="*{category}">소설</span><span class="availability" th:classappend="*{isAvailable ? ' is-available' : ''}" th:text="*{isAvailable ? '판매 중' : '품절'}">판매 중</span></div>
+            <h1 th:text="*{title}">도서 제목</h1>
+            <p class="detail-author" th:text="*{author}">저자</p>
+            <div class="detail-price"><strong th:text="${#numbers.formatInteger(bookData.discountPrice, 0, 'COMMA')} + '원'">12,000원</strong><del th:if="*{price != discountPrice}" th:text="${#numbers.formatInteger(bookData.price, 0, 'COMMA')} + '원'">15,000원</del></div>
+            <div class="detail-info">
+                <div class="info-item"><span>판매 상태</span><strong th:classappend="*{isAvailable ? ' status-available' : ''}" th:text="*{isAvailable ? '판매 중' : '판매 종료'}">판매 중</strong></div><div class="info-item"><span>카테고리</span><strong th:text="*{category}">소설</strong></div><div class="info-item"><span>등록일</span><strong th:text="*{createdAt}">2026.08.05</strong></div><div class="info-item"><span>마지막 수정</span><strong th:text="*{updatedAt}">2026.08.05</strong></div>
+            </div>
+            <div class="detail-actions"><a class="button button-primary" th:href="@{/books/{id}/edit(id=${bookData.id})}">수정하기</a><form method="post" th:action="@{/books/{id}/delete(id=${bookData.id})}" onsubmit="return confirm('이 도서를 삭제할까요?');"><button class="button button-danger" type="submit">삭제하기</button></form></div>
+            <a class="button button-quiet" th:href="@{/books}">목록으로 돌아가기</a>
+        </div>
+    </section>
+</main>
+</body>
+</html>
