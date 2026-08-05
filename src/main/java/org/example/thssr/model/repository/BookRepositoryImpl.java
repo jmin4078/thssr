@@ -36,6 +36,6 @@ public class BookRepositoryImpl extends BookRepository {
     }
     @Override
     public List<BookEntity> search(String keyword) {
-        return bookJpaRepository.findAllByTitleContaining(keyword);
+        return bookJpaRepository.findAllByTitleContainingOrAuthorContaining(keyword, keyword);
     }
 }

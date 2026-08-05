@@ -18,6 +18,7 @@ public class BookController {
 
     @GetMapping
     public String page(Model model, @RequestParam(required = false) String keyword) {
+        model.addAttribute("keyword", keyword);
         if (keyword != null) {
             model.addAttribute("books", bookService.search(keyword));
         } else {

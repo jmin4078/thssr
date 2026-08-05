@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>책장 | 도서 관리</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>.home-toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:24px 0 0}.search-form{display:flex;align-items:center;gap:8px;width:min(360px,100%);background:#fff;border:1px solid var(--line);border-radius:11px;padding:5px 6px 5px 14px}.search-form:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px #e875541f}.search-form input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:13px}.search-form input::placeholder{color:#b0b5bd}.search-form button{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:9px 13px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}.search-form button:hover{background:#33445d}@media(max-width:760px){.home-toolbar{align-items:stretch;flex-direction:column}.search-form{width:100%}}</style>
 </head>
 <body>
 <main class="shell">
     <header class="topbar">
         <a class="brand" th:href="@{/books}" aria-label="나만의 책장 홈"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 5.5c3.2-.8 6.1-.2 8.5 1.8v12c-2.4-2-5.3-2.6-8.5-1.8v-12Z"/><path d="M20.5 5.5c-3.2-.8-6.1-.2-8.5 1.8v12c2.4-2 5.3-2.6 8.5-1.8v-12Z"/></svg></span><span>나만의 책장</span></a>
         <a class="button button-primary" th:href="@{/books/new}"><span aria-hidden="true">＋</span> 도서 등록</a>
-        <section>
-            <form>
-                <label>키워드 : <input name="keyword"></label>
-                <button>검색</button>
-            </form>
-        </section>
     </header>
+    <div class="home-toolbar"><span class="muted">나만의 책을 찾아보세요.</span><form class="search-form" method="get" th:action="@{/books}"><span aria-hidden="true">⌕</span><input name="keyword" th:value="${keyword}" placeholder="제목 또는 저자 검색"><button type="submit">검색</button></form></div>
     <section class="hero">
         <div><p class="eyebrow">MY LIBRARY</p><h1>나만의 책장을<br><em>한눈에 관리하세요.</em></h1><p class="hero-copy">읽고 싶은 책과 이미 만난 책을 한곳에 모아보세요.</p></div>
         <div class="hero-art" aria-hidden="true"><span>✦</span><span>BOOKS</span></div>

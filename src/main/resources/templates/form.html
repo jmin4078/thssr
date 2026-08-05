@@ -4,7 +4,7 @@
 <body>
 <main class="shell form-shell">
     <header class="topbar"><a class="brand" th:href="@{/books}" aria-label="나만의 책장 홈"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 5.5c3.2-.8 6.1-.2 8.5 1.8v12c-2.4-2-5.3-2.6-8.5-1.8v-12Z"/><path d="M20.5 5.5c-3.2-.8-6.1-.2-8.5 1.8v12c-2.4-2-5.3-2.6-8.5-1.8v-12Z"/></svg></span><span>나만의 책장</span></a><a class="back-link" th:href="@{/books}">← 목록으로</a></header>
-    <section class="form-heading"><p class="eyebrow" th:text="${editMode} ? 'EDIT BOOK' : 'NEW BOOK'">NEW BOOK</p><h1 th:if="${!editMode}">새로운 책을<br><em>책장에 추가하세요.</em></h1><h1 th:if="${editMode}">도서 정보를<br><em>수정하세요.</em></h1><p class="hero-copy">도서 정보를 입력하면 나의 컬렉션에 바로 저장됩니다.</p></section>
+    <section class="form-heading"><p class="eyebrow" th:text="${editMode} ? 'EDIT BOOK' : 'NEW BOOK'">NEW BOOK</p><h1 th:if="${!editMode}">새로운 책을<br><em>책장에 추가하세요.</em></h1><h1 th:if="${editMode}">도서 정보를<br><em>수정하세요.</em></h1><p class="hero-copy">도서 정보를 입력하면 나만의 책장에 바로 저장됩니다.</p></section>
     <section class="form-card"><form method="post" th:action="${formAction}" th:object="${bookForm}">
         <div class="form-grid">
             <label class="field field-wide"><span>도서 제목</span><input th:field="*{title}" placeholder="예: 데미안" required></label>
