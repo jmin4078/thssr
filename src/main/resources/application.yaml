@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: thssr
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  thymeleaf:
+    cache: false
